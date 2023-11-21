@@ -1,30 +1,27 @@
-function maxSubarraySum(arr, number) {
-  if (arr.length < number) {
-    return null;
+function averagePair(arr, number) {
+  if (arr.length === 0) {
+    return false;
   }
 
-  let highest = 0;
-  let index = 0;
+  const sum = number * 2;
 
-  while (index !== arr.length) {
-    let sum = 0;
-    for (let i = index; i < index + number; i++) {
-      if (!arr[i]) {
-        sum = sum;
-      } else {
-        sum += arr[i];
-      }
+  let min = 0;
+  let max = arr.length - 1;
+
+  while (max > min) {
+    if (arr[min] + arr[max] === sum) {
+      return true;
+    } else if (arr[min] + arr[max] > sum) {
+      max -= 1;
+    } else if (arr[min] + arr[max] < sum) {
+      min += 1;
     }
-
-    index++;
-
-    highest = Math.max(sum, highest);
   }
-  return highest;
+
+  return false;
 }
 
-console.log(maxSubarraySum([100, 200, 300, 400], 2)); // 700
-console.log(maxSubarraySum([1, 4, 2, 10, 23, 3, 1, 0, 20], 4)); // 39
-console.log(maxSubarraySum([-3, 4, 0, -2, 6, -1], 2)); // 5
-console.log(maxSubarraySum([3, -2, 7, -4, 1, -1, 4, -2, 1], 2)); // 5
-console.log(maxSubarraySum([2, 3], 3)); // null
+console.log(averagePair([1, 2, 3], 2.5)); // true
+console.log(averagePair([1, 3, 3, 5, 6, 7, 10, 12, 19], 8)); // true
+console.log(averagePair([-1, 0, 3, 4, 5, 6], 4.1)); // false
+console.log(averagePair([], 4)); // false
